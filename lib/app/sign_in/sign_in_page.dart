@@ -16,6 +16,14 @@ class SignInPage extends StatelessWidget {
     }
   }
 
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoofle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Widget buildContent() {
     return Padding(
       padding: EdgeInsets.all(16.0),
@@ -37,7 +45,7 @@ class SignInPage extends StatelessWidget {
             text: 'Sign in with Google',
             textColor: Colors.black87,
             color: Colors.white,
-            onPressed: () {},
+            onPressed: _signInWithGoogle,
           ),
           SizedBox(height: 8.0),
           SocialSignInButton(
