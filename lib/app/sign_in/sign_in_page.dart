@@ -4,7 +4,6 @@ import '../sign_in/sign_in_button.dart';
 import '../sign_in/social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
-  
   SignInPage({@required this.auth});
   final AuthBase auth;
 
@@ -19,6 +18,14 @@ class SignInPage extends StatelessWidget {
   Future<void> _signInWithGoogle() async {
     try {
       await auth.signInWithGoofle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> _signInWithFacebook() async {
+    try {
+      await auth.signInWithFacsebook();
     } catch (e) {
       print(e.toString());
     }
@@ -53,7 +60,7 @@ class SignInPage extends StatelessWidget {
             text: 'Sign in with Facebook',
             textColor: Colors.white,
             color: Color(0xFF334D92),
-            onPressed: () {},
+            onPressed: _signInWithFacebook,
           ),
           SizedBox(height: 8.0),
           SignInButton(
