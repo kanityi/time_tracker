@@ -1,0 +1,4 @@
+enum EmailSigninFormType {
+  signIn,
+  register,
+}
