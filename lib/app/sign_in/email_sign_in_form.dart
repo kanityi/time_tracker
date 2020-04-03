@@ -1,15 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:time_tracker/app/common_widgets/platform_alert_dialog.dart';
-import '../services/auth.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'package:time_tracker/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/app/services/auth.dart';
 import '../sign_in/enums/email_sign_type.dart';
 import '../common_widgets/form_submit_button.dart';
 import 'validation/validators.dart';
 
 class EmailSignInForm extends StatefulWidget with EmailAndpasswordValidators {
-  EmailSignInForm({@required this.auth});
-  final AuthBase auth;
   @override
   _EmailSignInFormState createState() => _EmailSignInFormState();
 }
@@ -25,6 +24,15 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   bool _submitted = false;
   bool _isLoading = false;
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
   void _submit() async {
     setState(() {
       _submitted = true;
@@ -32,17 +40,17 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     });
     try {
       //await Future.delayed(Duration(seconds: 3));
+      final auth = Provider.of<AuthBase>(context, listen: false);
       if (_formType == EmailSigninFormType.signIn) {
-        await widget.auth.signInWithEmailAndPassword(_email, _password);
+        await auth.signInWithEmailAndPassword(_email, _password);
       } else {
-        await widget.auth.createUserWithEmailAndPassword(_email, _password);
+        await auth.createUserWithEmailAndPassword(_email, _password);
       }
       Navigator.of(context).pop();
-    } catch (e) {
-      PlatformAlertDialog(
-        tittle: 'Sign in failed',
-        content: e.toString(),
-        defaultActionText: 'OK',
+    } on PlatformException catch (e) {
+      PlatformExceptionAlertDialog(
+        title: 'Sign in failed',
+        exception: e,
       ).show(context);
     } finally {
       setState(() {

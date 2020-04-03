@@ -6,14 +6,14 @@ import '../common_widgets/platform_widget.dart';
 
 class PlatformAlertDialog extends PlatformWidget {
   PlatformAlertDialog(
-      {@required this.tittle,
+      {@required this.title,
       @required this.content,
       @required this.defaultActionText,
       this.cancelActionText})
-      : assert(tittle != null),
+      : assert(title != null),
         assert(content != null),
         assert(defaultActionText != null);
-  final String tittle;
+  final String title;
   final String content;
   final String defaultActionText;
   final String cancelActionText;
@@ -34,7 +34,7 @@ class PlatformAlertDialog extends PlatformWidget {
   @override
   Widget buildCupertinoWidget(BuildContext context) {
     return CupertinoAlertDialog(
-      title: Text(tittle),
+      title: Text(title),
       content: Text(content),
       actions: _buildActions(context),
     );
@@ -43,7 +43,7 @@ class PlatformAlertDialog extends PlatformWidget {
   @override
   Widget buildMaterialWidget(BuildContext context) {
     return AlertDialog(
-      title: Text(tittle),
+      title: Text(title),
       content: Text(content),
       actions: _buildActions(context),
     );
