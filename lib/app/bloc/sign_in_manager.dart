@@ -3,28 +3,21 @@ import 'package:flutter/foundation.dart';
 
 import '../services/auth.dart';
 
-class SignInBloc {
-  SignInBloc({@required this.auth});
+class SignInManager {
+  SignInManager({@required this.auth, @required this.isLoading});
   final AuthBase auth;
-  StreamController<bool> _isLoadingStreamController = StreamController<bool>();
-
-  Stream<bool> get isLoadingStream => _isLoadingStreamController.stream;
-  void _setIsLoading(bool isLoading) =>
-      _isLoadingStreamController.add(isLoading);
-
-  void dispose() {
-    _isLoadingStreamController.close();
-  }
+  final ValueNotifier<bool> isLoading;
 
   Future<User> _signIn(Future<User> Function() signinMethod) async {
     try {
-      _setIsLoading(true);
+      isLoading.value = true;
       return await signinMethod();
     } catch (e) {
-      _setIsLoading(false);
+      isLoading.value = false;
       rethrow;
     }
   }
+
   Future<User> signInAnonymously() async =>
       await _signIn(auth.signInAnonymously);
   Future<User> signInWithGoogle() async => await _signIn(auth.signInWithGoogle);
