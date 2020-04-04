@@ -13,7 +13,7 @@ abstract class AuthBase {
   Stream<User> get onAuthStateChanged;
   Future<User> currentUser();
   Future<User> signInAnonymously();
-  Future<User> signInWithGoofle();
+  Future<User> signInWithGoogle();
   Future<User> signInWithFacsebook();
   Future<User> signInWithEmailAndPassword(String email, String password);
   Future<User> createUserWithEmailAndPassword(String email, String password);
@@ -48,7 +48,7 @@ class Auth implements AuthBase {
   }
 
   @override
-  Future<User> signInWithGoofle() async {
+  Future<User> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleAccount = await googleSignIn.signIn();
     if (googleAccount != null) {

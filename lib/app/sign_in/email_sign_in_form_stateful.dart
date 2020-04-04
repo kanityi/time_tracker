@@ -3,17 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:time_tracker/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/app/models/email_sign_in_model.dart';
 import 'package:time_tracker/app/services/auth.dart';
 import '../sign_in/enums/email_sign_type.dart';
 import '../common_widgets/form_submit_button.dart';
 import 'validation/validators.dart';
 
-class EmailSignInForm extends StatefulWidget with EmailAndpasswordValidators {
+class EmailSignInFormStateful extends StatefulWidget
+    with EmailAndpasswordValidators {
   @override
-  _EmailSignInFormState createState() => _EmailSignInFormState();
+  _EmailSignInFormStatefulState createState() =>
+      _EmailSignInFormStatefulState();
 }
 
-class _EmailSignInFormState extends State<EmailSignInForm> {
+class _EmailSignInFormStatefulState extends State<EmailSignInFormStateful> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -33,7 +36,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     super.dispose();
   }
 
-  void _submit() async {
+  Future<void> _submit() async {
     setState(() {
       _submitted = true;
       _isLoading = true;
@@ -144,14 +147,18 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: _buildChildren(),
-      ),
-    );
+    return StreamBuilder<EmailSignInModel>(
+        stream: null,
+        builder: (context, snapshot) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: _buildChildren(),
+            ),
+          );
+        });
   }
 
   _updateState() {
