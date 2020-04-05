@@ -14,6 +14,9 @@ class PlatformExceptionAlertDialog extends PlatformAlertDialog {
         );
 
   static String _messge(PlatformException exception) {
+    if (exception.code == 'Error performing setData') {
+      return 'Yo do not have permissions for this operation.';
+    }
     return _errors[exception.code] ?? exception.message;
   }
 
