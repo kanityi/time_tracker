@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker/app/home/home_page.dart';
 import 'package:time_tracker/app/services/database.dart';
 import './services/auth.dart';
-import './home/jobs/jobs_page.dart';
 import './sign_in/sign_in_page.dart';
 
 class LandingPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class LandingPage extends StatelessWidget {
           }
           return Provider<Database>(
             create: (_) => FirestoreDatabase(uid: user.uid),
-            child: JobsPage(),
+            child: HomePage(),
           );
         } else {
           return Scaffold(
